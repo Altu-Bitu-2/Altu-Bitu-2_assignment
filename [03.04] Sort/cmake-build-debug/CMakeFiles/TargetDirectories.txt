@@ -1,0 +1,3 @@
+C:/Users/s2soo/Desktop/GitHub/Altu-Bitu-2_assignment/[03.04] Sort/cmake-build-debug/CMakeFiles/_03_04__Sort.dir
+C:/Users/s2soo/Desktop/GitHub/Altu-Bitu-2_assignment/[03.04] Sort/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/s2soo/Desktop/GitHub/Altu-Bitu-2_assignment/[03.04] Sort/cmake-build-debug/CMakeFiles/rebuild_cache.dir
