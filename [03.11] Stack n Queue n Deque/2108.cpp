@@ -20,14 +20,13 @@ int main() {
         cin >> arr[i];
     }
 
-    double sum = 0;
-    double size = n, avg;
-    int mid, mod, range;
+    double sum = 0, size = n;
+    int mid, mod, range, avg;
 
     // 산술평균
     for (int i=0; i<n; i++)
         sum += arr[i];
-    avg = round((double)(sum/size));
+    avg = (int)round(sum/size);
     cout << avg << "\n";
 
     // 중앙값
