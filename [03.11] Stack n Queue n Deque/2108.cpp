@@ -26,6 +26,8 @@ int main() {
     // 산술평균
     for (int i=0; i<n; i++)
         sum += arr[i];
+    // (int)로 형변환을 안 해주면 error (<- round 함수는 -0이 나올 수도 있기 때문)
+    // floor 함수를 사용해서 반올림을 구현할 수도 있음
     avg = (int)round(sum/size);
     cout << avg << "\n";
 
