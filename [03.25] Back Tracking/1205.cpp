@@ -2,73 +2,54 @@
 // Created by s2soo on 2022-03-31.
 //
 
-
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-int getRank(vector<int> v, int n, int new_score, int p) {
-    int result = -1;
-
-    // 등수 계산
-    vector<int> rank;
-    bool flag = false; // 동점 발생 시 true
-    for (int i=0; i<n; i++) {
-        if (v[i] > new_score)
-            continue;
-
-        if (v[i] == new_score) {
-            flag = true;
-            // index랑 등수는 1 차이가 나므로 보정
-            rank.push_back(i+1); // index 저장용
-            continue;
-        }
-
-        if (v[i] < new_score) {
-            // index랑 등수는 1 차이가 나므로 보정
-            rank.push_back(i+1);
+int findRanking(int n, int new_score, int p, vector<int> &ranking) {
+    int idx = 1;
+    int ans = 1;
+    //새로운 점수를 어느 위치에 넣을지 탐색
+    while (idx <= n) {
+        // 새로운 점수가 해당 점수보다 크면 더 진행할 필요 없으므로 중단
+        if (new_score > ranking[idx]) {
             break;
         }
+        // 새로운 점수가 해당 점수보다 작으면, 해당 점수의 뒷 등수임
+        if (new_score < ranking[idx]) {
+            ans = idx + 1;
+        }
+        idx++; // 등수 하나씩 밀림
     }
-
-    // 점수판에 있는 점수가 다 new_score보다 크면
-    if (rank.empty())
+    if (idx == p + 1) { //랭킹 리스트에 들어가지 못하는 경우
         return -1;
-
-    // 동점 발생 시 첫 index가 등수
-    if (flag)
-        result = rank.front();
-        // 동점이 없을 땐 마지막에 저장된 index가 등수
-    else
-        result = rank.back();
-
-    // 등수가 p보다 크면 점수판에 못 들어감
-    // 등수==p이나 동점 아닌 경우는 p등이 되므로, 동점 있을 때만 조건 적용
-    if (flag && result >= p)
-        result = -1;
-
-    return result;
+    }
+    return ans;
 }
 
+/**
+ * [등수 구하기]
+ *
+ * 1. n = 0일 때, 고려
+ * 2. 등수는 p보다 작지만, 점수가 더 좋을 때만 랭킹이 갱신되므로 랭킹 리스트에 들어가지 못하는 경우 고려 (동점)
+ *
+ * 현재 랭킹에 올라간 n까지 등수와 새로운 점수를 비교하며 새로운 점수 몇 등인지 계산
+ * 새로운 점수가 현재 탐색 등수의 점수보다 작다면 -> 현재 탐색 등수 + 1
+ * 동점일 경우 -> 그 전 등수 그대로 사용 -> 아무 처리도 하지 않음!
+ */
+
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
-
-    // 입력
     int n, new_score, p;
-    vector<int> v(55, 0); // 점수판에 있는 점수 저장
+
+    //입력
     cin >> n >> new_score >> p;
-
-    if (n > 0) {
-        for (int i=0; i<n; i++)
-            cin >> v[i];
-
-        cout << getRank(v, n, new_score, p);
+    vector<int> ranking(p + 1, 0);
+    for (int i = 1; i <= n; i++) {
+        cin >> ranking[i];
     }
-        // n==0: 점수판에 점수 없을 때
-    else
-        cout << 1;
 
+    //연산 & 출력
+    cout << findRanking(n, new_score, p, ranking);
     return 0;
 }
